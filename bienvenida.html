@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bienvenidos a Tecnoteca San Justo</title>
+<meta name="description" content="Encontrá toda la información de la Tecnoteca de San Justo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>html, body { margin: 0; background: #0F0F0F; }</style>
+</head>
+<body>
+
+<!-- Página de entrada: solo la sección hero. El botón "Ver talleres" lleva a index.html -->
+<style>
+/* ---------- Contenedor y aislamiento ---------- */
+#seccion-tecnoteca-hero {
+  --tt-accent: #EAB308;        /* amarillo con cuerpo */
+  --tt-accent-deep: #CA8A04;
+  --tt-ink: #0F0F0F;
+  --tt-white: #FFFFFF;
+  --tt-ease: cubic-bezier(.23, 1, .32, 1);
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; min-height: 100svh;
+  padding: clamp(88px, 14vw, 140px) clamp(16px, 5vw, 48px) clamp(56px, 9vw, 96px);
+  background: var(--tt-ink); color: var(--tt-white);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  line-height: 1.5; text-align: center; -webkit-font-smoothing: antialiased;
+}
+#seccion-tecnoteca-hero *, #seccion-tecnoteca-hero *::before, #seccion-tecnoteca-hero *::after { box-sizing: border-box; }
+#seccion-tecnoteca-hero :where(h1, p, a, button, img, video) { margin: 0; }
+
+/* ---------- Video de fondo ---------- */
+#seccion-tecnoteca-hero .tt-media { position: absolute; inset: 0; z-index: -2; overflow: hidden;
+  background: radial-gradient(80% 60% at 80% 0%, rgba(234,179,8,.35), transparent 70%), linear-gradient(160deg, #1a1608, #0F0F0F 60%); }
+#seccion-tecnoteca-hero .tt-video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 32%; display: block; filter: brightness(.4) saturate(.85); }
+#seccion-tecnoteca-hero .tt-shade { position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(to bottom, rgba(15,15,15,.62), rgba(15,15,15,.5) 45%, rgba(15,15,15,.88)); }
+
+/* ---------- Panel Liquid Glass ---------- */
+#seccion-tecnoteca-hero .tt-glass {
+  position: relative; overflow: hidden;
+  background: linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.06)), rgba(30,30,30,.42);
+  -webkit-backdrop-filter: blur(30px) saturate(170%); backdrop-filter: blur(30px) saturate(170%);
+  border: 1px solid rgba(255,255,255,.26);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), inset 0 -1px 0 rgba(255,255,255,.05), 0 24px 70px -18px rgba(0,0,0,.7);
+}
+#seccion-tecnoteca-hero .tt-glass::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: radial-gradient(320px circle at var(--tt-mx, 50%) var(--tt-my, 50%), rgba(255,255,255,.16), transparent 60%);
+  transition: opacity .3s var(--tt-ease); }
+#seccion-tecnoteca-hero .tt-glass:hover::before { opacity: 1; }
+
+#seccion-tecnoteca-hero .tt-panel { width: 100%; max-width: 820px; border-radius: clamp(24px, 4vw, 36px);
+  padding: clamp(28px, 6vw, 64px) clamp(20px, 5vw, 56px); display: flex; flex-direction: column; align-items: center; }
+
+/* ---------- Marca ---------- */
+#seccion-tecnoteca-hero .tt-brand { display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'Montserrat', 'Inter', sans-serif; font-weight: 800; font-size: clamp(1.05rem, 2.6vw, 1.25rem); letter-spacing: -.01em; }
+#seccion-tecnoteca-hero .tt-brand img { width: clamp(32px, 6vw, 40px); height: auto; display: block; } /* PERSONALIZAR: tamaño del logo */
+#seccion-tecnoteca-hero .tt-brand b { color: var(--tt-accent); font-weight: 800; }
+
+/* ---------- Textos ---------- */
+#seccion-tecnoteca-hero .tt-title { margin-top: clamp(18px, 3.5vw, 28px); font-family: 'Montserrat', 'Inter', sans-serif; font-weight: 900;
+  font-size: clamp(1.9rem, 6.4vw, 3.6rem); line-height: 1.06; letter-spacing: -.025em; text-wrap: balance; text-shadow: 0 2px 18px rgba(0,0,0,.45); }
+#seccion-tecnoteca-hero .tt-title em { font-style: normal; color: var(--tt-accent); }
+#seccion-tecnoteca-hero .tt-sub { margin-top: clamp(12px, 2vw, 18px); font-weight: 500; font-size: clamp(1rem, 2.3vw, 1.25rem);
+  color: rgba(255,255,255,.92); max-width: 34em; text-wrap: pretty; }
+
+/* ---------- Botones (Liquid Glass + acento) ---------- */
+#seccion-tecnoteca-hero .tt-actions { margin-top: clamp(24px, 4.5vw, 40px); display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; width: 100%; }
+#seccion-tecnoteca-hero .tt-btn { position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 14px 28px; border-radius: 999px; text-decoration: none; cursor: pointer;
+  font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; color: var(--tt-white);
+  background: linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.05));
+  -webkit-backdrop-filter: blur(14px) saturate(160%); backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid rgba(255,255,255,.2);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 10px 30px -10px rgba(0,0,0,.6);
+  transition: transform .18s var(--tt-ease), border-color .25s var(--tt-ease), box-shadow .25s var(--tt-ease), background .25s var(--tt-ease); }
+#seccion-tecnoteca-hero .tt-btn::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .25s var(--tt-ease);
+  background: radial-gradient(160px circle at var(--tt-mx, 50%) var(--tt-my, 50%), rgba(255,255,255,.4), transparent 60%); }
+#seccion-tecnoteca-hero .tt-btn:hover { transform: translateY(-2px); border-color: rgba(234,179,8,.7); box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 14px 38px -10px rgba(234,179,8,.45); }
+#seccion-tecnoteca-hero .tt-btn:hover::before { opacity: 1; }
+#seccion-tecnoteca-hero .tt-btn:active { transform: scale(.97); }
+#seccion-tecnoteca-hero .tt-btn:focus-visible { outline: 2px solid var(--tt-accent); outline-offset: 3px; }
+#seccion-tecnoteca-hero .tt-btn--primary { color: #1a1400; border-color: rgba(255,235,150,.55);
+  background: linear-gradient(135deg, rgba(250,204,21,.96), rgba(202,138,4,.94));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 12px 34px -8px rgba(234,179,8,.55); }
+#seccion-tecnoteca-hero .tt-btn--primary:hover { border-color: rgba(255,245,200,.95); box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 16px 46px -8px rgba(234,179,8,.75); }
+#seccion-tecnoteca-hero .tt-btn svg { width: 1.3em; height: 1.3em; flex: none; fill: currentColor; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 560px) {
+  #seccion-tecnoteca-hero .tt-actions { flex-direction: column; align-items: stretch; }
+  #seccion-tecnoteca-hero .tt-btn { width: 100%; }
+}
+@media (min-width: 1100px) { #seccion-tecnoteca-hero .tt-panel { max-width: 900px; } }
+@media (prefers-reduced-motion: reduce) {
+  #seccion-tecnoteca-hero *, #seccion-tecnoteca-hero *::before { transition: none !important; }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  #seccion-tecnoteca-hero .tt-glass, #seccion-tecnoteca-hero .tt-btn:not(.tt-btn--primary) { background: rgba(30,30,30,.82); }
+}
+</style>
+
+<section id="seccion-tecnoteca-hero" aria-labelledby="tt-titulo">
+
+  <!-- PERSONALIZAR 1: video de fondo. Usá un MP4 (H.264) liviano, idealmente < 6 MB, y un poster. -->
+  <div class="tt-media" aria-hidden="true">
+    <video class="tt-video" autoplay loop muted playsinline preload="auto" poster="video-tecnoteca-poster.jpg">
+      <source src="video-tecnoteca.mp4" type="video/mp4">
+      <!-- <source src="video-tecnoteca.webm" type="video/webm"> -->
+    </video>
+  </div>
+  <div class="tt-shade" aria-hidden="true"></div>
+
+  <div class="tt-glass tt-panel">
+    <!-- PERSONALIZAR 2: logo (acá va incrustado el logo blanco; podés cambiarlo por src="logo.png") -->
+    <div class="tt-brand">
+      <img src="data:image/png;base64,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" alt="" width="40" height="40">
+      <span>Tecno<b>teca</b></span>
+    </div>
+
+    <h1 class="tt-title" id="tt-titulo">Bienvenidos a la página web de <em>Tecnoteca</em></h1>
+    <p class="tt-sub">Encontrá toda nuestra información acá</p>
+
+    <div class="tt-actions">
+      <!-- PERSONALIZAR 3: número de WhatsApp (código de país + área + número, sin + ni espacios) -->
+      <a class="tt-btn tt-btn--primary" href="https://wa.me/5493498522444?text=Hola!%20Quiero%20agendar%20una%20visita%20a%20la%20Tecnoteca." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Quiero agendar una visita
+      </a>
+      <!-- PERSONALIZAR 4: destino del segundo botón (acá: la página principal, index.html) -->
+      <a class="tt-btn" href="index.html?vista=principal">Ver más info</a>
+    </div>
+  </div>
+
+</section>
+
+<script>
+/* Comportamiento del módulo: destello que sigue al cursor + respeto por "reducir movimiento" */
+(function () {
+  var root = document.getElementById('seccion-tecnoteca-hero');
+  if (!root) return;
+  root.querySelectorAll('.tt-glass, .tt-btn').forEach(function (el) {
+    el.addEventListener('pointermove', function (e) {
+      var r = el.getBoundingClientRect();
+      el.style.setProperty('--tt-mx', (e.clientX - r.left) + 'px');
+      el.style.setProperty('--tt-my', (e.clientY - r.top) + 'px');
+    });
+  });
+  var v = root.querySelector('.tt-video');
+  if (v) {
+    /* Video decorativo: siempre silenciado y en bucle continuo */
+    v.muted = true; v.defaultMuted = true; v.loop = true; v.playsInline = true;
+    var play = function () { var p = v.play(); if (p && p.catch) p.catch(function () {}); };
+    v.addEventListener('ended', function () { v.currentTime = 0; play(); });           /* respaldo del bucle */
+    v.addEventListener('pause', function () { if (!v.ended && !document.hidden) setTimeout(play, 150); }); /* si el navegador lo frena, retoma */
+    v.addEventListener('canplay', play);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) play(); });
+    ['pointerdown', 'touchstart', 'keydown', 'scroll'].forEach(function (ev) {         /* modo ahorro de batería: arranca al primer toque */
+      window.addEventListener(ev, function () { if (v.paused) play(); }, { passive: true, once: false });
+    });
+    play();
+  }
+})();
+</script>
+
+</body>
+</html>
