@@ -3,11 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>
-  if (new URLSearchParams(window.location.search).get('vista') !== 'principal') {
-    window.location.replace('bienvenida.html');
-  }
-</script>
 <title>Tecnoteca San Justo — Espacio de Desarrollo e Innovación Educativa</title>
 <meta name="description" content="Cursos, talleres, capacitaciones y medios para la comunidad de San Justo. Agendá tu visita a la Tecnoteca.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -129,14 +124,12 @@ tailwind.config = { theme: { extend: {
       </div>
     </div>
 
-    <!-- Video -->
+    <!-- Video de presentación -->
     <div class="glass mt-12 rounded-[28px] p-2 sm:p-3">
-      <div class="relative aspect-video rounded-[20px] overflow-hidden bg-gradient-to-br from-[#2a2208] via-[#15120a] to-[#0F0F0F]">
-        <video class="h-full w-full rounded-[20px] object-cover" controls playsinline preload="metadata" aria-label="Video de presentación de Tecnoteca">
-          <source src="TECNOTECAC.mp4" type="video/mp4">
-          Tu navegador no puede reproducir este video.
-        </video>
-      </div>
+      <video class="block w-full aspect-video rounded-[20px] bg-black object-contain" controls playsinline preload="metadata" aria-label="Video de presentación de Tecnoteca">
+        <source src="TECNOTECAC.mp4" type="video/mp4">
+        Tu navegador no admite la reproducción de video.
+      </video>
     </div>
   </div>
 </section>
@@ -175,6 +168,126 @@ tailwind.config = { theme: { extend: {
     </div>
   </div>
 </section>
+
+<!-- =====================================================================
+  MÓDULO: TALLERES - CHARLAS DISPONIBLES
+  Independiente: todo el CSS vive bajo #modulo-talleres-charlas (clases con prefijo "tcm-").
+  Para AGREGAR un taller: copiá una tarjeta completa (de "INICIO TARJETA" a "FIN TARJETA"),
+  pegala dentro de <div class="tcm-grid"> y cambiá título, etiquetas, descripción y enlace.
+====================================================================== -->
+<style>
+#modulo-talleres-charlas {
+  --tcm-gold: #EAB308; --tcm-ease: cubic-bezier(.23, 1, .32, 1);
+  padding: clamp(40px, 8vw, 72px) 20px; color: #fff; text-align: left;
+  font-family: 'DM Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif; line-height: 1.5;
+}
+#modulo-talleres-charlas *, #modulo-talleres-charlas *::before, #modulo-talleres-charlas *::after { box-sizing: border-box; }
+#modulo-talleres-charlas :where(h2, h3, p, ul, a, button) { margin: 0; padding: 0; }
+
+/* ---------- El recuadro (tarjeta contenedora) ---------- */
+#modulo-talleres-charlas .tcm-card {
+  max-width: 1024px; margin: 0 auto; position: relative; overflow: hidden;
+  padding: clamp(22px, 4.5vw, 44px); border-radius: clamp(22px, 3.5vw, 32px);
+  background: linear-gradient(145deg, rgba(255,255,255,.07), rgba(255,255,255,.02)), rgba(20,20,20,.55);
+  -webkit-backdrop-filter: blur(18px) saturate(150%); backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid rgba(255,255,255,.13);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 24px 60px -20px rgba(0,0,0,.7);
+}
+#modulo-talleres-charlas .tcm-card::after { /* halo dorado sutil en la esquina */
+  content: ""; position: absolute; top: -90px; right: -90px; width: 260px; height: 260px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(234,179,8,.22), transparent 70%); pointer-events: none;
+}
+
+/* ---------- Encabezado ---------- */
+#modulo-talleres-charlas .tcm-title {
+  font-family: 'Bricolage Grotesque', 'DM Sans', system-ui, sans-serif; font-weight: 800;
+  font-size: clamp(1.7rem, 5.2vw, 2.7rem); line-height: 1.08; letter-spacing: -.025em; text-wrap: balance;
+}
+#modulo-talleres-charlas .tcm-title::after { content: ""; display: block; width: 56px; height: 4px; margin-top: 14px; border-radius: 4px; background: var(--tcm-gold); }
+
+/* ---------- Grilla ---------- */
+#modulo-talleres-charlas .tcm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 16px; margin-top: 28px; }
+#modulo-talleres-charlas .tcm-grid > .tcm-item:only-child { max-width: 560px; } /* con una sola tarjeta, que no se estire de más */
+
+/* ---------- Tarjeta de cada taller ---------- */
+#modulo-talleres-charlas .tcm-item {
+  position: relative; display: flex; flex-direction: column; gap: 14px; padding: 22px; border-radius: 22px;
+  background: linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.03));
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 10px 30px -14px rgba(0,0,0,.6);
+  transition: transform .25s var(--tcm-ease), border-color .25s var(--tcm-ease), box-shadow .25s var(--tcm-ease);
+}
+#modulo-talleres-charlas .tcm-item::before { /* destello que sigue al cursor */
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .3s var(--tcm-ease);
+  background: radial-gradient(240px circle at var(--tcm-mx, 50%) var(--tcm-my, 50%), rgba(255,255,255,.12), transparent 60%);
+}
+#modulo-talleres-charlas .tcm-item:hover { transform: translateY(-3px); border-color: rgba(234,179,8,.55); }
+#modulo-talleres-charlas .tcm-item:hover::before { opacity: 1; }
+#modulo-talleres-charlas .tcm-item-title { font-family: 'Bricolage Grotesque', 'DM Sans', system-ui, sans-serif; font-weight: 700; font-size: 1.25rem; line-height: 1.2; letter-spacing: -.015em; }
+#modulo-talleres-charlas .tcm-chips { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; }
+#modulo-talleres-charlas .tcm-chip { padding: 4px 10px; border-radius: 999px; font-size: .75rem; font-weight: 500; color: rgba(255,255,255,.85); background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14); }
+#modulo-talleres-charlas .tcm-chip--gold { color: #FDE68A; background: rgba(234,179,8,.14); border-color: rgba(234,179,8,.45); }
+#modulo-talleres-charlas .tcm-chip--orange { color: #FFD2A8; background: rgba(249,115,22,.2); border-color: rgba(249,115,22,.6); }
+#modulo-talleres-charlas .tcm-desc { font-size: .925rem; color: rgba(255,255,255,.7); } /* sin límite de líneas: se muestra el texto completo */
+
+/* ---------- Botón de acción ---------- */
+#modulo-talleres-charlas .tcm-btn {
+  margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 999px;
+  font-weight: 600; font-size: .9rem; text-decoration: none; color: #1a1400; cursor: pointer;
+  background: linear-gradient(135deg, rgba(250,204,21,.96), rgba(202,138,4,.94)); border: 1px solid rgba(255,235,150,.55);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 8px 24px -8px rgba(234,179,8,.5);
+  transition: transform .16s var(--tcm-ease), box-shadow .25s var(--tcm-ease);
+}
+#modulo-talleres-charlas .tcm-btn:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 12px 32px -8px rgba(234,179,8,.7); }
+#modulo-talleres-charlas .tcm-btn:active { transform: scale(.97); }
+#modulo-talleres-charlas .tcm-btn:focus-visible { outline: 2px solid var(--tcm-gold); outline-offset: 3px; }
+@media (max-width: 480px) { #modulo-talleres-charlas .tcm-btn { align-self: stretch; justify-content: center; } }
+@media (prefers-reduced-motion: reduce) { #modulo-talleres-charlas * { transition: none !important; } }
+</style>
+
+<!-- ============ INICIO MÓDULO: TALLERES - CHARLAS DISPONIBLES ============ -->
+<section id="modulo-talleres-charlas" aria-labelledby="tcm-titulo">
+  <div class="tcm-card">
+
+    <h2 class="tcm-title" id="tcm-titulo">Talleres - Charlas Disponibles</h2>
+
+    <div class="tcm-grid">
+
+      <!-- ===== INICIO TARJETA 1 (copiá desde acá) ===== -->
+      <article class="tcm-item" data-modalidad="presencial">
+        <h3 class="tcm-item-title">Modo IA ¡ACTIVADO! por Delia Toffolini</h3>
+        <ul class="tcm-chips">
+          <li class="tcm-chip">Presencial</li>
+          <li class="tcm-chip tcm-chip--orange">15 de octubre</li>
+          <li class="tcm-chip tcm-chip--gold">Gratuito</li>
+          <li class="tcm-chip">Duración: 1 h 30</li>
+        </ul>
+        <p class="tcm-desc">Propuesta para comprender qué es la Inteligencia Artificial, cómo funciona y qué hay detrás de las herramientas que ya forman parte de nuestra vida cotidiana, pero también para descubrir todo su potencial como recurso para generar ideas, crear, aprender y transformar nuestras prácticas.</p>
+        <a class="tcm-btn" href="https://forms.gle/dG3oSjPmX3y6eBMBA" target="_blank" rel="noopener">Más información</a>
+      </article>
+      <!-- ===== FIN TARJETA 1 (hasta acá) ===== -->
+
+      <!-- Para agregar otro taller: pegá una tarjeta nueva acá, antes del cierre de tcm-grid -->
+
+    </div>
+
+  </div>
+</section>
+<!-- ============ FIN MÓDULO: TALLERES - CHARLAS DISPONIBLES ============ -->
+
+<script>
+/* JS ligero del módulo: destello que sigue al cursor */
+(function () {
+  var root = document.getElementById('modulo-talleres-charlas');
+  if (!root) return;
+  root.addEventListener('pointermove', function (e) {
+    var it = e.target.closest && e.target.closest('.tcm-item'); if (!it) return;
+    var r = it.getBoundingClientRect();
+    it.style.setProperty('--tcm-mx', (e.clientX - r.left) + 'px');
+    it.style.setProperty('--tcm-my', (e.clientY - r.top) + 'px');
+  });
+})();
+</script>
 
 <!-- COMUNIDAD -->
 <section id="comunidad" class="py-16 px-5">
