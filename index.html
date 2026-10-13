@@ -75,6 +75,17 @@ tailwind.config = { theme: { extend: {
   .intro > *:nth-child(2) { animation-delay: .08s } .intro > *:nth-child(3) { animation-delay: .16s }
   .intro > *:nth-child(4) { animation-delay: .24s } .intro > *:nth-child(5) { animation-delay: .32s }
 
+  /* Video mock */
+  @keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(234,179,8,.45); } 100% { box-shadow: 0 0 0 22px rgba(234,179,8,0); } }
+  .play { animation: pulse-ring 2s ease-out infinite; transition: opacity .2s ease, transform .2s ease, pointer-events .2s ease; }
+  .playing .play { opacity: 0; transform: scale(.9); pointer-events: none; animation: none; }
+  .bar { transform-origin: left; transform: scaleX(0); }
+  .playing .bar { animation: fill 24s linear forwards; }
+  @keyframes fill { to { transform: scaleX(1); } }
+  @keyframes eq { 0%, 100% { height: 20% } 50% { height: 100% } }
+  .eq i { display: block; width: 4px; border-radius: 2px; background: #EAB308; animation: eq 1s ease-in-out infinite; }
+  .eq i:nth-child(2) { animation-delay: .2s } .eq i:nth-child(3) { animation-delay: .4s } .eq i:nth-child(4) { animation-delay: .1s }
+
   .field { width: 100%; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); border-radius: 14px; padding: 12px 14px; color: #fff; outline: none; transition: border-color .2s, background .2s; }
   .field::placeholder { color: rgba(255,255,255,.4); }
   .field:focus { border-color: #EAB308; background: rgba(255,255,255,.08); }
@@ -117,19 +128,31 @@ tailwind.config = { theme: { extend: {
       <h1 class="mt-5 text-4xl sm:text-6xl font-extrabold leading-[1.02]">Tecnoteca — Espacio de Desarrollo e Innovación Educativa</h1>
       <p class="mt-5 text-lg text-white/70 max-w-2xl">La Tecnoteca es el espacio de innovación educativa y tecnológica de San Justo. Un punto de encuentro libre y gratuito diseñado para que chicos, jóvenes y adultos aprendan robótica, creación de contenido, inteligencia artificial, programación y mucho más.</p>
       <div class="mt-8 flex flex-wrap items-center gap-3">
-        <a data-wa href="#" target="_blank" rel="noopener" class="glass glass-gold btn rounded-full px-6 py-3.5 font-semibold flex items-center gap-2.5 text-base">
+        <a data-wa data-visit href="#" target="_blank" rel="noopener" class="glass glass-gold btn rounded-full px-6 py-3.5 font-semibold flex items-center gap-2.5 text-base">
           <svg class="wa-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg> Quiero agendar una visita
         </a>
         <a href="#talleres" class="glass btn rounded-full px-5 py-3.5 text-sm text-white/90">Ver talleres</a>
       </div>
     </div>
 
-    <!-- Video de presentación -->
-    <div class="glass mt-12 rounded-[28px] p-2 sm:p-3">
-      <video class="block w-full aspect-video rounded-[20px] bg-black object-contain" controls playsinline preload="metadata" aria-label="Video de presentación de Tecnoteca">
-        <source src="TECNOTECAC.mp4" type="video/mp4">
-        Tu navegador no admite la reproducción de video.
-      </video>
+    <!-- Video -->
+    <div id="video" class="glass mt-12 rounded-[28px] p-2 sm:p-3 cursor-pointer" role="button" tabindex="0" aria-label="Reproducir video de presentación">
+      <div class="relative aspect-video rounded-[20px] overflow-hidden bg-gradient-to-br from-[#2a2208] via-[#15120a] to-[#0F0F0F]">
+        <video id="videoPlayer" class="absolute inset-0 h-full w-full object-cover" playsinline preload="metadata" src="TECNOTECAC.mp4"></video>
+        <div class="absolute inset-0 opacity-40" style="background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 36px 36px;"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <button id="playBtn" class="play glass rounded-full w-20 h-20 flex items-center justify-center text-gold text-2xl btn" aria-label="Play">
+            <i id="playIcon" class="fa-solid fa-play ml-1"></i>
+          </button>
+        </div>
+        <div class="absolute left-4 bottom-4 right-4">
+          <div class="flex items-end justify-between gap-3 mb-2">
+            <p class="text-sm sm:text-base font-medium">Conocé la Tecnoteca en 2 minutos</p>
+            <div class="eq hidden h-4 items-end gap-0.5" id="eq"><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="h-1 rounded-full bg-white/15 overflow-hidden"><div class="bar h-full bg-gold rounded-full"></div></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -339,7 +362,7 @@ tailwind.config = { theme: { extend: {
 <section class="py-16 px-5">
   <div class="glass mx-auto max-w-4xl rounded-[32px] px-6 py-14 sm:py-20 text-center" style="background-image: radial-gradient(70% 90% at 50% 0%, rgba(234,179,8,.34), transparent 70%);">
     <h2 class="text-3xl sm:text-5xl font-extrabold leading-tight max-w-2xl mx-auto">¡Vení a conocer la Tecnoteca y sé parte de la transformación digital de San Justo!</h2>
-    <a data-wa href="#" target="_blank" rel="noopener" class="glass glass-gold btn mt-9 inline-flex items-center gap-3 rounded-full px-8 py-4 text-base sm:text-lg font-semibold">
+    <a data-wa data-visit href="#" target="_blank" rel="noopener" class="glass glass-gold btn mt-9 inline-flex items-center gap-3 rounded-full px-8 py-4 text-base sm:text-lg font-semibold">
       <svg class="wa-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg> Quiero agendar una visita por WhatsApp
     </a>
   </div>
@@ -374,11 +397,12 @@ tailwind.config = { theme: { extend: {
 <script>
   // === CONFIGURACIÓN: reemplazá estos datos ===
   const WHATSAPP_NUMBER = '5493498522444'; // +54 9 3498 52-2444 (código de país + área + número, sin + ni espacios)
+  const VISIT_NUMBER = '5493498529707'; // +54 9 3498 52-9707 (botones "Quiero agendar una visita")
   const INSTAGRAM_URL = 'https://www.instagram.com/tecnotecagcsj?stkn=MThia3E4M2NhM2tucw=='; // perfil de Tecnoteca
   const WA_TEXT = 'Hola! Quiero agendar una visita a la Tecnoteca.';
   // ============================================
-  const wa = (t) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(t)}`;
-  document.querySelectorAll('[data-wa]').forEach(a => a.href = a.hasAttribute('data-nomsg') ? `https://wa.me/${WHATSAPP_NUMBER}` : wa(WA_TEXT));
+  const wa = (t, n = WHATSAPP_NUMBER) => `https://wa.me/${n}?text=${encodeURIComponent(t)}`;
+  document.querySelectorAll('[data-wa]').forEach(a => a.href = a.hasAttribute('data-nomsg') ? `https://wa.me/${WHATSAPP_NUMBER}` : a.hasAttribute('data-visit') ? wa(WA_TEXT, VISIT_NUMBER) : wa(WA_TEXT));
   document.querySelectorAll('a[href="https://www.instagram.com/"]').forEach(a => a.href = INSTAGRAM_URL);
   document.getElementById('y').textContent = new Date().getFullYear();
 
@@ -388,6 +412,41 @@ tailwind.config = { theme: { extend: {
     el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
     el.style.setProperty('--my', (e.clientY - r.top) + 'px');
   }));
+
+  const v = document.getElementById('video'),
+        video = document.getElementById('videoPlayer'),
+        playBtn = document.getElementById('playBtn'),
+        icon = document.getElementById('playIcon'),
+        eq = document.getElementById('eq');
+
+  const syncUi = () => {
+    const on = !video.paused;
+    v.classList.toggle('playing', on);
+    playBtn.classList.toggle('opacity-0', on);
+    playBtn.classList.toggle('pointer-events-none', on);
+    icon.className = on ? 'fa-solid fa-pause' : 'fa-solid fa-play ml-1';
+    eq.classList.toggle('hidden', !on); eq.classList.toggle('flex', on);
+    v.setAttribute('aria-label', on ? 'Pausar video de presentación' : 'Reproducir video de presentación');
+  };
+
+  const toggle = async () => {
+    if (video.paused) {
+      try {
+        await video.play();
+      } catch (error) {
+        console.warn('No se pudo reproducir el video', error);
+      }
+    } else {
+      video.pause();
+    }
+    syncUi();
+  };
+
+  video.addEventListener('play', syncUi);
+  video.addEventListener('pause', syncUi);
+  video.addEventListener('ended', syncUi);
+  v.addEventListener('click', toggle);
+  v.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
 
   // Formulario → WhatsApp
   document.getElementById('form').addEventListener('submit', e => {
