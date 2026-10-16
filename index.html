@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+if (new URLSearchParams(window.location.search).get('vista') !== 'principal') {
+  window.location.replace('bienvenida.html');
+}
+</script>
 <title>Tecnoteca San Justo — Espacio de Desarrollo e Innovación Educativa</title>
 <meta name="description" content="Cursos, talleres, capacitaciones y medios para la comunidad de San Justo. Agendá tu visita a la Tecnoteca.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
